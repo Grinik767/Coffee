@@ -1,15 +1,16 @@
 import sys
 import os
 import sqlite3
-from PyQt5 import uic
+from addEditCoffeeForm import Ui_Form1
+from form import Ui_Form
 from sys import argv, executable
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QAbstractItemView, QWidget
 
 
-class MyWidget(QMainWindow):
+class MyWidget(QMainWindow, Ui_Form):
     def __init__(self):
         super().__init__()
-        uic.loadUi('main.ui', self)
+        self.setupUi(self)
         self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
         con = sqlite3.connect('coffee.sqlite')
         cur = con.cursor()
@@ -38,10 +39,10 @@ class MyWidget(QMainWindow):
         self.window.show()
 
 
-class Window(QWidget):
+class Window(QWidget, Ui_Form1):
     def __init__(self):
         super().__init__()
-        uic.loadUi('addEditCoffeeForm.ui', self)
+        self.setupUi(self)
         self.pushButton.clicked.connect(self.add)
         self.comboBox_4.currentIndexChanged.connect(self.view)
         con = sqlite3.connect('coffee.sqlite')
@@ -101,6 +102,7 @@ class Window(QWidget):
             self.lineEdit.setText('')
             self.lineEdit_2.setText('')
             self.lineEdit_3.setText('')
+
 
 
 if __name__ == '__main__':
